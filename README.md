@@ -16,6 +16,8 @@ yarn dev
 
 then you will be directed to open your browser to this page `http://localhost:3000` to see the final product!
 
+You can also find this web app online : [https://googlebooks.vanessahurtado.now.sh/](https://googlebooks.vanessahurtado.now.sh/)
+
 # Project
 
 This app was created with the help of this repo on how to use NextJS with data fetching: [example](https://github.com/zeit/next.js/tree/canary/examples/data-fetch)
@@ -24,8 +26,6 @@ This web app is calling one APIs and only calls the books with a given query.
 I am using `componentDidMount()` as I needed to use props from parent component to child. I am also calling `componentDidUpdate()` to make sure data does not keep fetching unless there is a change in query so the browser will not keep fetching and reloading.
 
 I also decided to use [grommet](https://v2.grommet.io/) as an easy theme and framework for my components so I could focus on how to build this app and used a linter to stylistic errors which keeps my code very organized and easy to read.
-
-You can find this web app online : [https://googlebooks.vanessahurtado.now.sh/](https://googlebooks.vanessahurtado.now.sh/)
 
 ### Challenges
 
