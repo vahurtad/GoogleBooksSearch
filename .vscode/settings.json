@@ -1,0 +1,12 @@
+{
+  "editor.formatOnSave": true,
+  "prettier.singleQuote": true,
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "[javascript]": {
+    "editor.tabSize": 2
+  },
+  "[javascriptreact]": {
+    "editor.tabSize": 2
+  }
+}
