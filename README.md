@@ -1,5 +1,7 @@
 # Work Orders
 
+_This app needs an API key under Books.js to fetch a query from Google API_
+
 ### How to run
 
 Install required **dependencies** under the root directory, then run `dev` command:
