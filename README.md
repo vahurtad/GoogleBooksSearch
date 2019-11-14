@@ -37,3 +37,8 @@ The second challenge was saving data for a list from multiple queries which I en
 ### Better
 
 I can make this app better by changing the design, colors and theme to make it more appealing towards the user. Another change I would fix the loading screens to show a better design.
+
+### Tools Used
+
+🖍️ Chalk and Inquirer for CLI
+React for Web
