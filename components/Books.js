@@ -15,7 +15,7 @@ export default class Worker extends React.Component {
   }
 
   componentDidMount() {
-    const key = '';
+    const key = 'YOUR_KEY_GOES_HERE';
     const { query } = this.props;
     try {
       // eslint-disable-next-line no-undef

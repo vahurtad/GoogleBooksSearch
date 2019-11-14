@@ -17,7 +17,7 @@ import { v1 } from 'grommet-theme-v1';
 import Books from '../components/Books';
 
 let listFave = [];
-// Code goes here
+
 export default class Index extends React.Component {
   constructor(props) {
     super(props);

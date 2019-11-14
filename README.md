@@ -2,6 +2,8 @@
 
 _This app needs an API key under Books.js to fetch a query from Google API_
 
+Make your API from the Google Developers Site [https://console.developers.google.com/](https://console.developers.google.com/) and the token `const key = 'YOUR_KEY_GOES_HERE';` under `Books.js`
+
 ### How to run
 
 Install required **dependencies** under the root directory, then run `dev` command:
