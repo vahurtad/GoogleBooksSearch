@@ -9,6 +9,7 @@ const { log } = console;
 
 function checkStatus(res) {
   if (res.ok) {
+    log(res.ok, res.status);
     // res.status >= 200 && res.status < 300
     return res;
   }
@@ -20,6 +21,9 @@ const searchPrompt = {
   name: 'query',
   message: 'Make a Search Query'
 };
+
+const sleep = ms => data =>
+  new Promise(resolve => setTimeout(resolve, ms, data));
 
 const initialPropt = () => {
   inquirer
@@ -43,8 +47,8 @@ const initialPropt = () => {
     });
 };
 
-function searchQueryAsk() {
-  inquirer.prompt([searchPrompt]).then(ans => {
+async function searchQueryAsk() {
+  await inquirer.prompt([searchPrompt]).then(ans => {
     log('Looking for :', chalk.red(ans.query));
     try {
       fetch(
@@ -52,6 +56,7 @@ function searchQueryAsk() {
       )
         .then(checkStatus)
         .then(res => res.json())
+        .then(sleep(1000))
         .then(val => searchQueryOut(val));
     } catch (e) {
       log('Could not make a query', 'error', e);
@@ -60,6 +65,6 @@ function searchQueryAsk() {
 }
 
 module.exports = () => {
-  asciiTitle();
+  // asciiTitle();
   searchQueryAsk();
 };
