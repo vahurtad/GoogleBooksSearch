@@ -1,11 +1,15 @@
 const fetch = require('node-fetch');
 
+const Configstore = require('configstore');
 const inquirer = require('inquirer');
 const chalk = require('chalk');
 const searchQueryOut = require('./CLI/searchQueryOut');
 const asciiTitle = require('./CLI/asciitTitle');
+const packageJson = require('./package.json');
 
 const { log } = console;
+// Create a Configstore instance
+const config = new Configstore(packageJson.name);
 
 const checkStatus = res => {
   if (res.ok) {
@@ -42,7 +46,7 @@ const searchQueryAsk = async () => {
   });
 };
 
-const initialPropt = () => {
+const initialPrompt = () => {
   inquirer
     .prompt([
       {
@@ -56,7 +60,8 @@ const initialPropt = () => {
       if (ans.choice === 'Make a Search Query') {
         searchQueryAsk();
       } else if (ans.choice === 'Check Reading List') {
-        // do something
+        log('>', config.all);
+        log(Object.values(config.all));
       } else if (ans.choice === 'Exit') {
         log(chalk.cyan('Good Bye 👋\n'));
         process.exit();
@@ -66,5 +71,5 @@ const initialPropt = () => {
 
 module.exports = () => {
   asciiTitle();
-  searchQueryAsk();
+  initialPrompt();
 };

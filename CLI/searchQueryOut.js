@@ -20,7 +20,7 @@ const afterData = () => {
     })
     .then(ans => {
       if (ans.choice === 'Show Reading List') {
-        log(config.get('one'));
+        log(config.all);
       } else if (ans.choice === 'Back?') {
         log(chalk.cyan('Good Bye 👋\n'));
         process.exit();
@@ -29,16 +29,16 @@ const afterData = () => {
     .then(utils.sleep(1000));
 };
 
-const setIndexForReadingList = ar => {
-  let key = 0;
-  if (config.get(key)) {
-    key += 1;
-    config.set(key, utils.formatNoStyle(ar));
+const setIndexForReadingList = res => {
+  log(res.id);
+  const key = res.id;
+  if (config.has(key)) {
+    log('This book is already in your reading list');
   } else {
-    config.set(0, utils.formatNoStyle(ar));
+    config.set(res.id, utils.formatNoStyle(res));
   }
 
-  readingList.push(ar);
+  readingList.push(res);
   log('setter', readingList.length);
   afterData();
 };
