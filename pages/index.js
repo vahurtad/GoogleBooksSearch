@@ -5,12 +5,10 @@ import {
   FormField,
   TextInput,
   Text,
-  Button,
   ResponsiveContext,
   Grommet,
   Box,
-  Grid,
-  Collapsible
+  Grid
 } from 'grommet';
 import { Favorite } from 'grommet-icons';
 import { v1 } from 'grommet-theme-v1';
@@ -25,23 +23,24 @@ export default class Index extends React.Component {
     this.state = {
       favorite: '',
       value: '',
-      enter: false,
-      openNotification: false
+      enter: false
     };
   }
 
+  // check if user has pressed enter
   handleKeyPress = event => {
     if (event.charCode === 13) {
       this.setState({ enter: true });
     }
   };
 
+  // add favorites to state
   handleFavorites(value) {
     this.setState({ favorite: value });
   }
 
   render() {
-    const { value, enter, favorite, openNotification } = this.state;
+    const { value, enter, favorite } = this.state;
 
     return (
       <Grommet full theme={v1}>
@@ -112,6 +111,7 @@ export default class Index extends React.Component {
   }
 }
 
+// Favorites component
 const Favorites = props => {
   return props.list.map(val => (
     <Box pad="medium" key={val[0]}>

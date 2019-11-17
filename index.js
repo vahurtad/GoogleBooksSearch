@@ -22,12 +22,13 @@ const checkStatus = res => {
   throw new Error("Sorry, there's been a problem.");
 };
 
-// check  and clear if the list is not empty else print message
+// check and clear if the list is not empty else print message
 const checkReadingList = json =>
   Object.keys(json).length === 0
     ? 'Sorry. Nothing in your Reading List!'
     : json;
 
+// shows a menu for reading list
 const readingListMenu = json => {
   prompts.readingListMenu().then(ans => {
     if (ans.choice === 'Delete Reading List') {
@@ -40,6 +41,7 @@ const readingListMenu = json => {
   });
 };
 
+// waits on user for input then waits on google for the query result
 const searchGoogle = async () => {
   await prompts.searchGooglePrompt().then(ans => {
     log('Looking for :', chalk.red(ans.query));
@@ -57,6 +59,7 @@ const searchGoogle = async () => {
   });
 };
 
+// main function that asks user what they would like to do
 const main = () => {
   prompts.initialPrompt().then(ans => {
     if (ans.choice === 'Make a Search Query') {

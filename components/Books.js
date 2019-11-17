@@ -12,11 +12,11 @@ export default class Worker extends React.Component {
     this.changeFave = this.changeFave.bind(this);
     this.state = {
       query: '',
-      isLoading: true,
-      color: 'dark-1'
+      isLoading: true
     };
   }
 
+  // wait for fetching to happen first
   componentDidMount() {
     const { query } = this.props;
     try {
@@ -31,15 +31,18 @@ export default class Worker extends React.Component {
     }
   }
 
+  // this function is used to add to favorites by passing props to parent component,
+  // and also adds favorite id to a set which is used to check
   changeFave(value) {
     this.props.onFavoriteChange(value);
-    this.setState({ color: 'red' });
     setofFaves.add(value[0]);
   }
 
   render() {
-    const { query, isLoading, color } = this.state;
+    const { query, isLoading } = this.state;
 
+    // if not loading, render each book with their respective content
+    // also renders a favorite icon for user to click on
     return !isLoading ? (
       <>
         {query.items.map(v => (
@@ -94,6 +97,8 @@ export default class Worker extends React.Component {
     );
   }
 }
+
+// Loading Component
 const Loading = () => (
   <Box full="vertical" justify="center" align="center">
     <Update color="#e02438" />
