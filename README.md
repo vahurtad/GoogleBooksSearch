@@ -69,7 +69,7 @@ yarn dev
 
 then you will be directed to open your browser to this page `http://localhost:3000` to see the final product!
 
-You can also find this web app online : [https://googlebooks.vanessahurtado.now.sh/](https://googlebooks.vanessahurtado.now.sh/)
+You can also find this web app online : [https://googlebookssearch.vanessahurtado.now.sh/](https://googlebookssearch.vanessahurtado.now.sh/)
 
 It was deployed using [Now](https://github.com/zeit/now)
 
