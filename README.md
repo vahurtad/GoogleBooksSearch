@@ -8,7 +8,7 @@
 
 ## CLI
 
-For the command line application I used the package `node-fetch` to connect to Google Books and make a query. I also used `Inquirer` as an interactive command line user interface that would help the user steps on what they need to do. Instead of using an array to store the favorites data, I used `configstore` to easily load and write data in a JSON format which was very easy to setup. For easier reading in any command line interface, I am using `chalk` which helps me style strings in the terminal.
+For the command line application, I used the package `node-fetch` to connect to Google Books and make a query. I also used `Inquirer` as an interactive command line user interface that would help the user steps on what they need to do. Instead of using an array to store the favorites data, I used `configstore` to easily load and write data in a JSON format which was very easy to setup. For easier reading in any command line interface, I am using `chalk` which helps me style strings in the terminal.
 
 ### How to run
 
@@ -21,6 +21,16 @@ There are two ways to run this program:
 
 Or just run the program with:
 `./bin/outside`
+
+```bash
+npm install #or yarn
+npm link
+g-books
+#or
+npm install #or yarn
+./bin/outside
+
+```
 
 ### Challenges
 
