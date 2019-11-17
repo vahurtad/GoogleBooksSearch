@@ -4,23 +4,25 @@ import { PropTypes } from 'prop-types';
 import { Text, Image, Box, Heading, Button } from 'grommet';
 import { Help, Update, Favorite } from 'grommet-icons';
 
+const setofFaves = new Set();
+
 export default class Worker extends React.Component {
   constructor(props) {
     super(props);
-    this.change_fave = this.change_fave.bind(this);
+    this.changeFave = this.changeFave.bind(this);
     this.state = {
       query: '',
-      isLoading: true
+      isLoading: true,
+      color: 'dark-1'
     };
   }
 
   componentDidMount() {
-    const key = 'YOUR_KEY_GOES_HERE';
     const { query } = this.props;
     try {
       // eslint-disable-next-line no-undef
       fetch(
-        `https://www.googleapis.com/books/v1/volumes?q=${query}&key=${key}&maxResults=5`
+        `https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=5`
       )
         .then(json => json.json())
         .then(json => this.setState({ query: json, isLoading: false }));
@@ -29,12 +31,14 @@ export default class Worker extends React.Component {
     }
   }
 
-  change_fave(value) {
+  changeFave(value) {
     this.props.onFavoriteChange(value);
+    this.setState({ color: 'red' });
+    setofFaves.add(value[0]);
   }
 
   render() {
-    const { query, isLoading } = this.state;
+    const { query, isLoading, color } = this.state;
 
     return !isLoading ? (
       <>
@@ -66,11 +70,15 @@ export default class Worker extends React.Component {
               </Text>
             </Box>
             <Button
-              icon={<Favorite color="dark-1" />}
-              plain={true}
+              icon={
+                <Favorite
+                  color={[...setofFaves].includes(v.id) ? 'red' : 'dark-1'}
+                />
+              }
+              plain
               hoverIndicator="light-1"
               onClick={() =>
-                this.change_fave([
+                this.changeFave([
                   v.id,
                   v.volumeInfo.title,
                   v.volumeInfo.authors,

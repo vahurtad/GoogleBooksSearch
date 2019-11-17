@@ -70,49 +70,40 @@ export default class Index extends React.Component {
           </FormField>
 
           <Box flex direction="row">
-            <Box flex align="end" justify="center">
-              <Button
-                icon={<Favorite color="dark-1" />}
-                label="Show Favorites"
-                hoverIndicator="light-1"
-                onClick={() =>
-                  this.setState({
-                    openNotification: !openNotification
-                  })
-                }
-              />
+            <Box flex align="center" justify="center">
+              <Favorite color="dark-1" />
+              <Text>Favorites</Text>
             </Box>
           </Box>
         </Box>
 
         <ResponsiveContext.Consumer>
           {() => (
-            <Grid align="end" alignContent="end">
-              {enter && value !== '' ? (
-                <>
-                  <Collapsible direction="vertical" open={openNotification}>
-                    <Box
-                      flex
-                      width="xlarge"
-                      background="light-2"
-                      pad="small"
-                      elevation="small"
-                    >
-                      <Text size="xlarge">Favorites</Text>
-                      <Favorites list={[...listFave]} />
-                    </Box>
-                  </Collapsible>
+            <Grid
+              align="start"
+              alignContent="start"
+              columns={['50%', '50%']}
+              gap="small"
+            >
+              <Box>
+                {enter && value !== '' ? (
                   <Books
                     query={value}
                     faves={favorite}
                     onFavoriteChange={this.handleFavorites}
                   />
+                ) : (
+                  'Nothing To Search'
+                )}
+              </Box>
+
+              <Box>
+                <Box style={{ display: 'none' }}>
                   {(listFave = new Set(listFave))}
                   {favorite !== '' ? listFave.add(favorite) : ''}
-                </>
-              ) : (
-                'Nothing To Search'
-              )}
+                </Box>
+                <Favorites list={[...listFave]} className="favorites-side" />
+              </Box>
             </Grid>
           )}
         </ResponsiveContext.Consumer>
