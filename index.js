@@ -1,17 +1,18 @@
 const fetch = require('node-fetch');
-
 const Configstore = require('configstore');
-const inquirer = require('inquirer');
 const chalk = require('chalk');
+
 const searchQueryOut = require('./lib/searchQueryOut');
 const asciiTitle = require('./lib/asciitTitle');
 const packageJson = require('./package.json');
 const util = require('./lib/utils.js');
+const prompts = require('./lib/prompts');
 
 const { log } = console;
 // Create a Configstore instance
 const config = new Configstore(packageJson.name);
 
+// check connection status to google
 const checkStatus = res => {
   if (res.ok) {
     log('Connected...');
@@ -21,40 +22,26 @@ const checkStatus = res => {
   throw new Error("Sorry, there's been a problem.");
 };
 
-const searchPrompt = {
-  type: 'input',
-  name: 'query',
-  message: 'Make a Search Query'
-};
-
+// check  and clear if the list is not empty else print message
 const checkReadingList = json =>
   Object.keys(json).length === 0
     ? 'Sorry. Nothing in your Reading List!'
     : json;
 
 const readingListMenu = json => {
-  inquirer
-    .prompt([
-      {
-        type: 'rawlist',
-        name: 'choice',
-        message: 'Choose an Option?',
-        choices: ['Delete Reading List', 'Exit']
-      }
-    ])
-    .then(ans => {
-      if (ans.choice === 'Delete Reading List') {
-        // eslint-disable-next-line no-unused-expressions
-        json ? json.clear() : log('Nothing to Delete');
-      } else if (ans.choice === 'Exit') {
-        log(chalk.cyan('Good Bye 👋\n'));
-        process.exit();
-      }
-    });
+  prompts.readingListMenu().then(ans => {
+    if (ans.choice === 'Delete Reading List') {
+      // eslint-disable-next-line no-unused-expressions
+      json ? json.clear() : log('Nothing to Delete');
+    } else if (ans.choice === 'Exit') {
+      log(chalk.cyan('Good Bye 👋\n'));
+      process.exit();
+    }
+  });
 };
 
-const searchQueryAsk = async () => {
-  await inquirer.prompt([searchPrompt]).then(ans => {
+const searchGoogle = async () => {
+  await prompts.searchGooglePrompt().then(ans => {
     log('Looking for :', chalk.red(ans.query));
     try {
       fetch(
@@ -70,30 +57,21 @@ const searchQueryAsk = async () => {
   });
 };
 
-const initialPrompt = () => {
-  inquirer
-    .prompt([
-      {
-        type: 'rawlist',
-        name: 'choice',
-        message: 'Choose an Option?',
-        choices: ['Make a Search Query', 'Check Reading List', 'Exit']
-      }
-    ])
-    .then(ans => {
-      if (ans.choice === 'Make a Search Query') {
-        searchQueryAsk();
-      } else if (ans.choice === 'Check Reading List') {
-        log(checkReadingList(config.all));
-        readingListMenu();
-      } else if (ans.choice === 'Exit') {
-        log(chalk.cyan('Good Bye 👋\n'));
-        process.exit();
-      }
-    });
+const main = () => {
+  prompts.initialPrompt().then(ans => {
+    if (ans.choice === 'Make a Search Query') {
+      searchGoogle();
+    } else if (ans.choice === 'Check Reading List') {
+      log(checkReadingList(config.all));
+      readingListMenu();
+    } else if (ans.choice === 'Exit') {
+      log(chalk.cyan('Good Bye 👋\n'));
+      process.exit();
+    }
+  });
 };
 
 module.exports = () => {
   asciiTitle();
-  initialPrompt();
+  main();
 };
